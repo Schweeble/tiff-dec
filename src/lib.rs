@@ -1,12 +1,10 @@
-mod image;
+pub mod image;
 mod utils;
 
 use crate::image::{DataType, Image, Metadata};
 use std::io::Cursor;
 use tiff::decoder::{Decoder, DecodingResult};
 use tiff::ColorType;
-
-use utils::set_panic_hook;
 use wasm_bindgen::{prelude::*, UnwrapThrowExt};
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
@@ -16,9 +14,8 @@ use wasm_bindgen::{prelude::*, UnwrapThrowExt};
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 #[wasm_bindgen]
-pub fn decode_image(image: Vec<u8>) -> Result<Image, JsValue> {
-    set_panic_hook();
-    let image_data_cursor = Cursor::new(image);
+pub fn decode_image(tif_file: Vec<u8>) -> Result<Image, JsValue> {
+    let image_data_cursor = Cursor::new(tif_file);
     let mut decoder = Decoder::new(image_data_cursor).unwrap_throw();
     let dimensions = decoder.dimensions().unwrap_throw();
     let metadata = Metadata {
