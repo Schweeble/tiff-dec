@@ -10,6 +10,7 @@ pub struct Image {
     metadata: Metadata,
 }
 
+#[wasm_bindgen]
 #[derive(Clone, Debug, PartialEq)]
 /// Metadata type for width and height information
 pub struct Metadata {

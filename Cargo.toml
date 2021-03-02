@@ -1,8 +1,9 @@
 [package]
 authors = ["Andrew Franco <andrejfranco@gmail.com>"]
 edition = "2018"
+license-file = "LICENCE_MIT"
 name = "tiff-dec"
-version = "0.1.0"
+version = "0.1.3"
 
 [lib]
 crate-type = ["cdylib", "rlib"]

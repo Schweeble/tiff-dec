@@ -67,3 +67,8 @@ pub fn to_decoded_f32(decoded_image: Image) -> Result<Vec<f32>, JsValue> {
         _ => return Err(JsValue::from("Decoded image was not in f32 format")),
     }
 }
+
+#[wasm_bindgen]
+pub fn metadata(decoded_image: Image) -> Metadata {
+    decoded_image.get_metadata()
+}
