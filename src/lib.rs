@@ -3,8 +3,8 @@ mod utils;
 
 use crate::image::{DataType, Image, Metadata};
 use std::io::Cursor;
-use tiff::decoder::Decoder;
-use tiff::decoder::DecodingResult;
+use tiff::decoder::{Decoder, DecodingResult};
+use tiff::ColorType;
 
 use utils::set_panic_hook;
 use wasm_bindgen::{prelude::*, UnwrapThrowExt};
@@ -24,6 +24,13 @@ pub fn decode_image(image: Vec<u8>) -> Result<Image, JsValue> {
     let metadata = Metadata {
         width: dimensions.0,
         height: dimensions.1,
+    };
+    match decoder.colortype().unwrap_throw() {
+        ColorType::Gray(_) => {
+            // do nothing, this is what we want
+        },
+        _ => return Err(JsValue::from(
+                "Decoded image is not in Grayscale format, must provide U8, U16 or F32 tiffs in Grayscale format"))
     };
     let decoded_img = decoder.read_image().unwrap_throw();
     let data = match decoded_img {
