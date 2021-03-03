@@ -2,30 +2,29 @@
 
 Javascript TIFF file decoder library built using wasm-pack and Rust.
 
-### 🛠️ Build with `wasm-pack build`
+## Example
 
 ```
-wasm-pack build
+import * as wasm from "tiff-dec";
+
+let tif = fetch("./img/grey8.tif")
+    .then((res) => res.arrayBuffer())
+    .then((buf) => {
+        var uint8 = new Uint8Array(buf);
+        return new Promise((resolve, reject) => {
+            const img = wasm.decode_image(uint8);
+
+            const metadata = img.metadata;
+
+            const decoded = wasm.to_decoded_u8(img);
+            resolve({ data: decoded, metadata: metadata });
+        });
+    });
+
+tif.then((decoded) => {
+    console.log(decoded.data.length);
+    console.log("width: ", decoded.metadata.width, " height: ", decoded.metadata.height);
+});
 ```
 
-### 🔬 Test in Headless Browsers with `wasm-pack test`
-
-```
-wasm-pack test --headless --firefox
-```
-
-### 🎁 Publish to NPM with `wasm-pack publish`
-
-```
-wasm-pack publish
-```
-
-## 🔋 Batteries Included
-
-* [`wasm-bindgen`](https://github.com/rustwasm/wasm-bindgen) for communicating
-  between WebAssembly and JavaScript.
-* [`console_error_panic_hook`](https://github.com/rustwasm/console_error_panic_hook)
-  for logging panic messages to the developer console.
-* [`wee_alloc`](https://github.com/rustwasm/wee_alloc), an allocator optimized
-  for small code size.
-
+Check out the full example in `examples/js`
