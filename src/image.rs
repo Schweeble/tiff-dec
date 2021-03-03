@@ -7,11 +7,11 @@ pub struct Image {
     /// data holds the various data types for this object, not visible to JS
     data: DataType,
     /// metadata from image
-    metadata: Metadata,
+    pub metadata: Metadata,
 }
 
 #[wasm_bindgen]
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 /// Metadata type for width and height information
 pub struct Metadata {
     /// width of image
@@ -29,16 +29,6 @@ impl Image {
     /// Gets the data for an image
     pub fn get_data(&self) -> DataType {
         self.data.clone()
-    }
-
-    /// Sets the metadata for an image
-    pub fn set_metadata(&mut self, metadata: Metadata) {
-        self.metadata = metadata;
-    }
-
-    /// Gets the metadata for an image
-    pub fn get_metadata(&self) -> Metadata {
-        self.metadata.clone()
     }
 
     /// Creates a new Image

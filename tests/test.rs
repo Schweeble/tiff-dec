@@ -7,16 +7,16 @@ mod test {
     #[test]
     fn test_decode_8bit() {
         let image = decode("resources/test/grey8.tif");
-        let metadata = image.get_metadata();
-        let data = to_decoded_u8(image).expect("Not in proper format (u8 grayscale)");
+        let metadata = image.metadata;
+        let data = to_decoded_u8(&image).expect("Not in proper format (u8 grayscale)");
         assert_eq!((metadata.width * metadata.height), data.len() as u32);
     }
 
     #[test]
     fn test_decode_16bit() {
         let image: image::Image = decode("resources/test/grey16.tif");
-        let metadata = image.get_metadata();
-        let data = to_decoded_u16(image).expect("Not in proper format (u8 grayscale)");
+        let metadata = image.metadata;
+        let data = to_decoded_u16(&image).expect("Not in proper format (u8 grayscale)");
         assert_eq!((metadata.width * metadata.height), data.len() as u32);
     }
 

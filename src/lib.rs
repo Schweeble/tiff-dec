@@ -45,7 +45,7 @@ pub fn decode_image(tif_file: Vec<u8>) -> Result<Image, JsValue> {
 }
 
 #[wasm_bindgen]
-pub fn to_decoded_u8(decoded_image: Image) -> Result<Vec<u8>, JsValue> {
+pub fn to_decoded_u8(decoded_image: &Image) -> Result<Vec<u8>, JsValue> {
     match decoded_image.get_data() {
         DataType::U8(data) => return Ok(data),
         _ => return Err(JsValue::from("Decoded image was not in u8 format")),
@@ -53,7 +53,7 @@ pub fn to_decoded_u8(decoded_image: Image) -> Result<Vec<u8>, JsValue> {
 }
 
 #[wasm_bindgen]
-pub fn to_decoded_u16(decoded_image: Image) -> Result<Vec<u16>, JsValue> {
+pub fn to_decoded_u16(decoded_image: &Image) -> Result<Vec<u16>, JsValue> {
     match decoded_image.get_data() {
         DataType::U16(data) => return Ok(data),
         _ => return Err(JsValue::from("Decoded image was not in u16 format")),
@@ -61,14 +61,9 @@ pub fn to_decoded_u16(decoded_image: Image) -> Result<Vec<u16>, JsValue> {
 }
 
 #[wasm_bindgen]
-pub fn to_decoded_f32(decoded_image: Image) -> Result<Vec<f32>, JsValue> {
+pub fn to_decoded_f32(decoded_image: &Image) -> Result<Vec<f32>, JsValue> {
     match decoded_image.get_data() {
         DataType::F32(data) => return Ok(data),
         _ => return Err(JsValue::from("Decoded image was not in f32 format")),
     }
-}
-
-#[wasm_bindgen]
-pub fn metadata(decoded_image: Image) -> Metadata {
-    decoded_image.get_metadata()
 }
