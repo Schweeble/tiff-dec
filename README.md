@@ -28,3 +28,8 @@ tif.then((decoded) => {
 ```
 
 Check out the full example in [examples/js](https://github.com/Schweeble/tiff-dec/tree/main/examples/js)
+
+
+### Building JS/Wasm package from source
+
+Check out [wasm-pack](https://github.com/rustwasm/wasm-pack) here for more information
