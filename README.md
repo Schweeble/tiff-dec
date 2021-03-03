@@ -4,7 +4,7 @@ Javascript TIFF file decoder library built using wasm-pack and Rust.
 
 ## Example
 
-```
+```javascript
 import * as wasm from "tiff-dec";
 
 let tif = fetch("./img/grey8.tif")
@@ -27,4 +27,4 @@ tif.then((decoded) => {
 });
 ```
 
-Check out the full example in `examples/js`
+Check out the full example in [examples/js](https://github.com/Schweeble/tiff-dec/tree/main/examples/js)
