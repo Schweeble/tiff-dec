@@ -40,8 +40,13 @@ declare module '*.png' {
 }
 
 declare module '*.webp' {
-    const src: string;
-    export default src;
+  const src: string;
+  export default src;
+}
+
+declare module '*.tif' {
+  const src: string;
+  export default src;
 }
 
 declare module '*.svg' {
