@@ -11,5 +11,5 @@ Cargo.lock
 
 #Wasm-generate related files and npm pkg files
 bin/
-pkg/
+
 wasm-pack.log
