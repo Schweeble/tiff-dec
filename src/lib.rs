@@ -1,7 +1,7 @@
 pub mod image;
 mod utils;
 
-use crate::image::{DataType, Image, Metadata};
+use crate::image::{Bitdepth, DataType, Image, Metadata};
 use std::io::Cursor;
 use tiff::decoder::{Decoder, DecodingResult};
 use tiff::ColorType;
@@ -18,9 +18,10 @@ pub fn decode_image(tif_file: Vec<u8>) -> Result<Image, JsValue> {
     let image_data_cursor = Cursor::new(tif_file);
     let mut decoder = Decoder::new(image_data_cursor).unwrap_throw();
     let dimensions = decoder.dimensions().unwrap_throw();
-    let metadata = Metadata {
+    let mut metadata = Metadata {
         width: dimensions.0,
         height: dimensions.1,
+        bit_depth: Bitdepth::Undefined,
     };
     match decoder.colortype().unwrap_throw() {
         ColorType::Gray(_) => {
@@ -31,9 +32,18 @@ pub fn decode_image(tif_file: Vec<u8>) -> Result<Image, JsValue> {
     };
     let decoded_img = decoder.read_image().unwrap_throw();
     let data = match decoded_img {
-        DecodingResult::U8(data) => DataType::U8(data),
-        DecodingResult::U16(data) => DataType::U16(data),
-        DecodingResult::F32(data) => DataType::F32(data),
+        DecodingResult::U8(data) => {
+            metadata.bit_depth = Bitdepth::U8;
+            DataType::U8(data)
+        }
+        DecodingResult::U16(data) => {
+            metadata.bit_depth = Bitdepth::U16;
+            DataType::U16(data)
+        }
+        DecodingResult::F32(data) => {
+            metadata.bit_depth = Bitdepth::F32;
+            DataType::F32(data)
+        }
         _ => {
             return Err(JsValue::from(
                 "Decoded image in unexpected format, must provide U8, U16 or F32 tiffs",

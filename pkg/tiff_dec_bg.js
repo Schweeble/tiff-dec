@@ -164,6 +164,10 @@ export function to_decoded_f32(decoded_image) {
 }
 
 /**
+* Bitdepth enum for metadata
+*/
+export const Bitdepth = Object.freeze({ U16:0,"0":"U16",U8:1,"1":"U8",F32:2,"2":"F32",Undefined:3,"3":"Undefined", });
+/**
 * Opaque image type for JS
 */
 export class Image {
@@ -257,6 +261,21 @@ export class Metadata {
     */
     set height(arg0) {
         wasm.__wbg_set_metadata_height(this.ptr, arg0);
+    }
+    /**
+    * bitdepth of image
+    * @returns {number}
+    */
+    get bit_depth() {
+        var ret = wasm.__wbg_get_metadata_bit_depth(this.ptr);
+        return ret >>> 0;
+    }
+    /**
+    * bitdepth of image
+    * @param {number} arg0
+    */
+    set bit_depth(arg0) {
+        wasm.__wbg_set_metadata_bit_depth(this.ptr, arg0);
     }
 }
 

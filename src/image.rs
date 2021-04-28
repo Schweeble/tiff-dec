@@ -18,6 +18,8 @@ pub struct Metadata {
     pub width: u32,
     /// height of image
     pub height: u32,
+    /// bitdepth of image
+    pub bit_depth: Bitdepth,
 }
 
 impl Image {
@@ -43,4 +45,14 @@ pub enum DataType {
     U16(Vec<u16>),
     U8(Vec<u8>),
     F32(Vec<f32>),
+}
+
+#[wasm_bindgen]
+#[derive(Clone, Copy, Debug, PartialEq)]
+/// Bitdepth enum for metadata
+pub enum Bitdepth {
+    U16,
+    U8,
+    F32,
+    Undefined,
 }

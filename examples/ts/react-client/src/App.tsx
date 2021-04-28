@@ -1,27 +1,13 @@
-import * as React from 'react';
-import image from "./grey16.tif";
-// import './App.css';
-import { Metadata } from 'tiff-dec';
-
-import { useWasm, WasmState } from "./useWasm"
-import { useImage, ImageState } from './fetchImage';
+import './App.css';
+import TifImage from './TifImage';
 
 
 function App() {
-
-
   return (
     <div className="App">
-      {}
+      <TifImage />
     </div>
   );
-}
-
-const decodeTif = (imageState: ImageState, wasmState: WasmState) => {
-  if (imageState.loaded && wasmState.loaded) {
-
-  }
-
 }
 
 export default App;

@@ -13,6 +13,8 @@ export function __wbg_get_metadata_width(a: number): number;
 export function __wbg_set_metadata_width(a: number, b: number): void;
 export function __wbg_get_metadata_height(a: number): number;
 export function __wbg_set_metadata_height(a: number, b: number): void;
+export function __wbg_get_metadata_bit_depth(a: number): number;
+export function __wbg_set_metadata_bit_depth(a: number, b: number): void;
 export function __wbindgen_malloc(a: number): number;
 export function __wbindgen_add_to_stack_pointer(a: number): number;
 export function __wbindgen_free(a: number, b: number): void;

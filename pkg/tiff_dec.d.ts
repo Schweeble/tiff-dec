@@ -21,6 +21,15 @@ export function to_decoded_u16(decoded_image: Image): Uint16Array;
 */
 export function to_decoded_f32(decoded_image: Image): Float32Array;
 /**
+* Bitdepth enum for metadata
+*/
+export enum Bitdepth {
+  U16,
+  U8,
+  F32,
+  Undefined,
+}
+/**
 * Opaque image type for JS
 */
 export class Image {
@@ -36,6 +45,11 @@ export class Image {
 */
 export class Metadata {
   free(): void;
+/**
+* bitdepth of image
+* @returns {number}
+*/
+  bit_depth: number;
 /**
 * height of image
 * @returns {number}
