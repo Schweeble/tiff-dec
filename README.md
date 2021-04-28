@@ -7,7 +7,7 @@
 
 [li]: https://img.shields.io/crates/l/specs.svg?maxAge=2592000
 
-[di]: https://img.shields.io/badge/doc-s-blue
+[di]: https://img.shields.io/badge/Documentation-GithubPages-blue
 [dl]: https://schweeble.github.io/tiff-dec/
 
 [lo]: https://tokei.rs/b1/github/Schweeble/tiff-dec?category=code
