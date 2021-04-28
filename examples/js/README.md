@@ -1,5 +1,8 @@
 # tiff-dec JS example
 
+Very basic example of how to use tiff-dec. For a more in-depth example, 
+see [examples/ts/react-client](https://github.com/Schweeble/tiff-dec/tree/main/examples/ts/react-client)
+
 ## install from npm
 
 ```

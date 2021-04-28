@@ -30,10 +30,10 @@ class TifImage extends Component<IProps, IState> {
     }
 
     componentDidMount() {
-        const fetchStuff = async () => {
+        const fetchFiles = async () => {
             try {
                 const wasm = await import('tiff-dec');
-                const image = fetch('./m51.tif')
+                const image = fetch('./grey16.tif')
                     .then((tif) => {
                         if (tif.status < 299)
                             return tif.arrayBuffer()
@@ -55,7 +55,7 @@ class TifImage extends Component<IProps, IState> {
                 });
             }
         };
-        fetchStuff();
+        fetchFiles();
     }
 
     render() {
@@ -67,7 +67,7 @@ class TifImage extends Component<IProps, IState> {
             const metadata = decodedImage.metadata;
             const decodedImageData = wasm.to_decoded_u16(decodedImage);
             return (
-                <div>
+                <div className="TifImage">
                     <TifCanvas width={metadata.width} height={metadata.height} image={decodedImageData} />
                 </div>
             );
