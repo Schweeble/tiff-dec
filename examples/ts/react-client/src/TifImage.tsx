@@ -62,15 +62,22 @@ class TifImage extends Component<IProps, IState> {
 
         const curState = this.state;
         if (curState.loaded === true && curState.image && curState.wasm) {
-            let wasm = curState.wasm;
-            const decodedImage = wasm.decode_image(curState.image);
-            const metadata = decodedImage.metadata;
-            const decodedImageData = wasm.to_decoded_u16(decodedImage);
-            return (
-                <div className="TifImage">
-                    <TifCanvas width={metadata.width} height={metadata.height} image={decodedImageData} />
-                </div>
-            );
+            try {
+                let wasm = curState.wasm;
+                const decodedImage = wasm.decode_image(curState.image);
+                const metadata = decodedImage.metadata;
+                const decodedImageData = wasm.to_decoded_u16(decodedImage);
+                return (
+                    <div className="TifImage">
+                        <TifCanvas width={metadata.width} height={metadata.height} image={decodedImageData} />
+                    </div>
+                );
+            }
+            catch (e) {
+                return (
+                    <p>Error occured: {e}</p>
+                )
+            }
         }
         else {
             let e = "";
