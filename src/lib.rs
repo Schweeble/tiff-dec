@@ -67,23 +67,23 @@ fn map_decoder_result(result: DecodingResult, metadata: &mut Metadata) -> Result
 #[wasm_bindgen]
 pub fn to_decoded_u8(decoded_image: &Image) -> Result<Vec<u8>, JsValue> {
     match decoded_image.get_data() {
-        DataType::GrayU8(data) => return Ok(data),
-        _ => return Err(JsValue::from("Decoded image was not in u8 format")),
+        DataType::GrayU8(data) => Ok(data),
+        _ => Err(JsValue::from("Decoded image was not in u8 format")),
     }
 }
 
 #[wasm_bindgen]
 pub fn to_decoded_u16(decoded_image: &Image) -> Result<Vec<u16>, JsValue> {
     match decoded_image.get_data() {
-        DataType::GrayU16(data) => return Ok(data),
-        _ => return Err(JsValue::from("Decoded image was not in u16 format")),
+        DataType::GrayU16(data) => Ok(data),
+        _ => Err(JsValue::from("Decoded image was not in u16 format")),
     }
 }
 
 #[wasm_bindgen]
 pub fn to_decoded_f32(decoded_image: &Image) -> Result<Vec<f32>, JsValue> {
     match decoded_image.get_data() {
-        DataType::GrayF32(data) => return Ok(data),
-        _ => return Err(JsValue::from("Decoded image was not in f32 format")),
+        DataType::GrayF32(data) => Ok(data),
+        _ => Err(JsValue::from("Decoded image was not in f32 format")),
     }
 }

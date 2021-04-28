@@ -11,6 +11,6 @@ pub enum Error {
 
 impl From<Error> for JsValue {
     fn from(e: Error) -> JsValue {
-        return JsValue::from(&e.to_string());
+        JsValue::from(&e.to_string())
     }
 }
