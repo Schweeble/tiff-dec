@@ -12,8 +12,8 @@
 
 [lo]: https://tokei.rs/b1/github/Schweeble/tiff-dec?category=code
 
-[btl]: https://schweeble.github.io/tiff-dec/workflows/unit-tests/badge.svg
-[bll]: https://schweeble.github.io/tiff-dec/workflows/lints/badge.svg
+[btl]: https://github.com/schweeble/tiff-dec/workflows/unit-tests/badge.svg
+[bll]: https://github.com/schweeble/tiff-dec/workflows/lints/badge.svg
 
 
 Javascript TIFF file decoder library built using wasm-pack and Rust.
