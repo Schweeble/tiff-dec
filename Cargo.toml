@@ -4,6 +4,7 @@ description = "tiff decoder for wasm"
 edition = "2018"
 license-file = "LICENCE_MIT"
 name = "tiff-dec"
+publish = false
 repository = "https://github.com/Schweeble/tiff-dec"
 version = "0.3.1"
 
