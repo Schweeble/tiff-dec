@@ -9,12 +9,6 @@ pub enum Error {
     U(String),
 }
 
-// impl Into<JsValue> for Error {
-//     fn into(self) -> JsValue {
-//         return JsValue::from(self.to_string());
-//     }
-// }
-
 impl From<Error> for JsValue {
     fn from(e: Error) -> JsValue {
         return JsValue::from(&e.to_string());
