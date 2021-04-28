@@ -42,9 +42,9 @@ impl Image {
 #[derive(Clone, Debug, PartialEq)]
 /// DataType enum to hold various decoded tiff types, not visible to JS
 pub enum DataType {
-    U16(Vec<u16>),
-    U8(Vec<u8>),
-    F32(Vec<f32>),
+    GrayU16(Vec<u16>),
+    GrayU8(Vec<u8>),
+    GrayF32(Vec<f32>),
 }
 
 #[wasm_bindgen]
