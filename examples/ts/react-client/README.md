@@ -1,6 +1,6 @@
 # Tiff-dec React Typescript example
 
-![App in Browser](http://github.com/Schweeble/tiff-dec/examples/ts/react-client/example.png)
+![App in Browser](https://github.com/Schweeble/tiff-dec/blob/main/examples/ts/react-client/example.png)
 # steps to recreate base app
 
 ```
