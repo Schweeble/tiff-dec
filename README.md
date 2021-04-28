@@ -3,7 +3,7 @@
 [![NPM version][npm-image]][cl] ![MIT/Apache][li] [![docs][di]][dl] ![LoC][lo] ![Tests][btl] ![Lints][bll]
 
 [npm-image]: https://img.shields.io/npm/v/image-js.svg
-[cl]: https://www.npmjs.com/package/image-js
+[cl]: https://www.npmjs.com/package/tiff-dec
 
 [li]: https://img.shields.io/crates/l/specs.svg?maxAge=2592000
 
