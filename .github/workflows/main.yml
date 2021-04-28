@@ -33,12 +33,9 @@ jobs:
       - uses: actions-rs/cargo@v1
         with:
           command: test
+          
+      - run: echo Building WASM package
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Building WASM package
-
-      # Runs a set of commands using the runners shell
       - name: wasm-pack-action download
         uses: jetli/wasm-pack-action@v0.3.0
         with:
