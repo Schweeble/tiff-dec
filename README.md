@@ -1,5 +1,21 @@
 # tiff-dec
 
+[![NPM version][npm-image]][cl] ![MIT][li] [![docs][di]][dl] ![LoC][lo] ![Tests][btl] ![Lints][bll]
+
+[npm-image]: https://img.shields.io/npm/v/tiff-dec.svg
+[cl]: https://www.npmjs.com/package/tiff-dec
+
+[li]: https://img.shields.io/crates/l/specs.svg?maxAge=2592000
+
+[di]: https://img.shields.io/badge/doc-s-blue
+[dl]: https://schweeble.github.io/tiff-dec/
+
+[lo]: https://tokei.rs/b1/github/Schweeble/tiff-dec?category=code
+
+[btl]: https://schweeble.github.io/tiff-dec/workflows/unit-tests/badge.svg
+[bll]: https://schweeble.github.io/tiff-dec/workflows/lints/badge.svg
+
+
 Javascript TIFF file decoder library built using wasm-pack and Rust.
 
 ## Example - Vanilla JS
