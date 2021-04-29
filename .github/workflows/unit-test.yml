@@ -4,7 +4,7 @@ name: unit-tests
 
 jobs:
   check:
-    name: Check
+    name: Check-And-Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
@@ -19,19 +19,6 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: check
-
-  test:
-    name: Test Suite
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v2
-
-      - name: Install toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-
       - name: Run cargo test
         uses: actions-rs/cargo@v1
         with:
