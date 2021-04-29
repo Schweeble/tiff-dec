@@ -29,11 +29,6 @@ jobs:
         with:
           toolchain: stable
 
-      # Runs cargo test
-      - uses: actions-rs/cargo@v1
-        with:
-          command: test
-
       - run: echo Building WASM package
 
       - name: wasm-pack-action download
