@@ -5,10 +5,8 @@ name: Main CI
 # Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+  release:
+    types: [released]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -42,6 +40,7 @@ jobs:
         with:
           token: ${{ secrets.NPM_TOKEN }}
           package: ./pkg/package.json
+          tag: ${GITHUB_REF##*/}
       - if: steps.publish.outputs.type != 'none'
         run: |
           echo "Version changed: ${{ steps.publish.outputs.old-version }} => ${{ steps.publish.outputs.version }}"
