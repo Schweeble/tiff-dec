@@ -1,6 +1,6 @@
 # tiff-dec
 
-[![NPM version][npm-image]][cl] ![MIT][li] [![docs][di]][dl] ![LoC][lo] ![Tests][btl] ![Lints][bll]
+[![NPM version][npm-image]][cl] ![MIT][li] [![docs][di]][dl]  ![Tests][btl] ![Lints][bll]
 
 [npm-image]: https://img.shields.io/npm/v/tiff-dec.svg
 [cl]: https://www.npmjs.com/package/tiff-dec
@@ -9,8 +9,6 @@
 
 [di]: https://img.shields.io/badge/Documentation-GithubPages-blue
 [dl]: https://schweeble.github.io/tiff-dec/
-
-[lo]: https://tokei.rs/b1/github/Schweeble/tiff-dec?category=code
 
 [btl]: https://github.com/schweeble/tiff-dec/workflows/unit-tests/badge.svg
 [bll]: https://github.com/schweeble/tiff-dec/workflows/lints/badge.svg
