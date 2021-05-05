@@ -5,7 +5,7 @@
 [npm-image]: https://img.shields.io/npm/v/tiff-dec.svg
 [cl]: https://www.npmjs.com/package/tiff-dec
 
-[li]: https://img.shields.io/crates/l/specs.svg?maxAge=2592000
+[li]: https://img.shields.io/badge/license-MIT-blue
 
 [di]: https://img.shields.io/badge/Documentation-GithubPages-blue
 [dl]: https://schweeble.github.io/tiff-dec/
