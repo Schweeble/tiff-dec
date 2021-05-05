@@ -144,8 +144,7 @@ class TifImage extends Component<IProps, IState> {
     render() {
         if (this.state.decodedImage &&
             this.state.decodedMetadata &&
-            this.state.displayImage &&
-            this.state.decodedImage) {
+            this.state.displayImage) {
             return (
                 <div>
                     <div className="image-container">

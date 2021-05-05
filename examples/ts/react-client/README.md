@@ -1,6 +1,6 @@
 # Tiff-dec React Typescript example
 
-![App in Browser](https://github.com/Schweeble/tiff-dec/blob/main/examples/ts/react-client/example.png)
+![App in Browser](https://github.com/Schweeble/tiff-dec/blob/main/examples/ts/example.png)
 # steps to recreate base app
 
 ```
@@ -25,49 +25,52 @@ npm run start
 
 ### async import of wasm module
 ```typescript
-const fetchFiles = async () => {
+componentDidMount() {
+  const fetchFiles = async () => {
     try {
-        const wasm = await import('tiff-dec');
-        const image = fetch('./grey16.tif')
-            .then((tif) => {
-                if (tif.status < 299)
-                    return tif.arrayBuffer()
-                else
-                    throw new Error("could not recieve tif");
-            })
-            .then((buff) => {
-                return new Promise<FetchData>((resolve, reject) => {
-                    resolve({ data: new Uint8Array(buff) });
-                });
-            });
-        const awaited = await image;
-        this.setState((previousState, _props) => {
-            return { ...previousState, loaded: true, wasm: wasm, image: awaited.data, error: undefined };
-        });
+      const { wasm, image } = await fetchAsync();
+      const decodedImage = wasm.decode_image(image);
+      const metadata = decodedImage.metadata;
+      const decodedImageData = wasm.to_decoded_u16(decodedImage);
+
+      let imageHistoMinMax: ContrastParams = this.preDepth(metadata.bit_depth, wasm);
+      let maxContrast = imageHistoMinMax.max;
+      this.setState((previousState, _props) => {
+        return {
+          ...previousState,
+          loaded: true,
+          wasm: wasm,
+          image: image,
+          error: undefined,
+          decodedImage: decodedImageData,
+          displayImage: decodedImageData,
+          imageContrast: imageHistoMinMax,
+          decodedMetadata: metadata,
+          maxContrast: maxContrast
+        };
+      });
     } catch (e) {
-        this.setState((previousState, _props) => {
-            return { ...previousState, loaded: false, error: e };
-        });
+      this.setState((previousState, _props) => {
+        return { ...previousState, loaded: false, error: e };
+      });
     }
-};
-fetchFiles();
+  };
+  fetchFiles();
+}
+
 ```
 
 ### Using tiff-dec library to decode fetched image
 ```typescript
 render() {
-    const curState = this.state;
-    if (curState.loaded === true && curState.image && curState.wasm) {
-        let wasm = curState.wasm;
-        const decodedImage = wasm.decode_image(curState.image);
-        const metadata = decodedImage.metadata;
-        const decodedImageData = wasm.to_decoded_u16(decodedImage);
-        return (
-            <div className="TifImage">
-                <TifCanvas width={metadata.width} height={metadata.height} image={decodedImageData} />
-            </div>
-        );
-    }
+  if (this.state.decodedImage &&
+    this.state.decodedMetadata &&) {
+    return (
+    ...
+      <TifCanvas
+          width={this.state.decodedMetadata.width}
+          height={this.state.decodedMetadata.height}
+          image={this.state.decodedImage} />
     ...
 }
 ```
