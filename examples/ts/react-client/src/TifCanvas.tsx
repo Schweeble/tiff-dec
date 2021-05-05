@@ -23,6 +23,7 @@ const TifCanvas = ({ width, height, image }: TifCanvasProps) => {
                 imageData.data[i + 3] = 255;
             }
             context.putImageData(imageData, 0, 0);
+
         }
     });
 
