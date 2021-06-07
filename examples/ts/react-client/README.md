@@ -1,9 +1,10 @@
 # Tiff-dec React Typescript example
 
 ![App in Browser](https://github.com/Schweeble/tiff-dec/blob/main/examples/ts/example.PNG)
-# steps to recreate base app
 
-```
+## steps to recreate base app
+
+```bash
 npx create-react-app react-client --template typescript
 
 npm install react-app-rewired wasm-loader -D
@@ -11,19 +12,20 @@ npm install react-app-rewired wasm-loader -D
 
 ## install from npm
 
-```
+```bash
 npm install
 ```
 
 ## run with npm
 
-```
+```bash
 npm run start
 ```
 
 ## Example usage
 
 ### async import of wasm module
+
 ```typescript
 componentDidMount() {
   const fetchFiles = async () => {
@@ -61,10 +63,11 @@ componentDidMount() {
 ```
 
 ### Using tiff-dec library to decode fetched image
+
 ```typescript
 render() {
   if (this.state.decodedImage &&
-    this.state.decodedMetadata &&) {
+    this.state.decodedMetadata) {
     return (
     ...
       <TifCanvas
