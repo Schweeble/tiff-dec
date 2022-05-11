@@ -75,6 +75,7 @@ function TifImage() {
     const [contrastSliderValue, setContrastSliderValue] = useState([0, 100]);
     const [maxContrast, setMaxContrast] = useState(100);
 
+    // determines bit depth of image and returns contrast stretching parameters
     function preDepth(depth: any, wasm: ModuleType): ContrastParams {
         switch (depth) {
             case wasm.Bitdepth.U8:
@@ -87,10 +88,6 @@ function TifImage() {
             default:
                 return { min: 0, max: 0 }
         }
-    };
-
-    function handleContrastChange(e: Event, value: number | number[], activeThumb: number) {
-        if (Array.isArray(value)) setContrastSliderValue(value);
     };
 
     // mount the component
@@ -120,6 +117,10 @@ function TifImage() {
         }
         fetchFiles();
     }, []);
+
+    function handleContrastChange(e: Event, value: number | number[], activeThumb: number) {
+        if (Array.isArray(value)) setContrastSliderValue(value);
+    };
 
     // contrast stretching
     useEffect(() => {
