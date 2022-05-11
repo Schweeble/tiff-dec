@@ -48,6 +48,65 @@ Check out the full example in [examples/js](https://github.com/Schweeble/tiff-de
 
 [examples/ts](http://github.com/Schweeble/tiff-dec/tree/main/examples/ts/react-client)
 
+### async import of wasm module
+
+```typescript
+// Fetches asynchronous files and dependencies
+const fetchAsync = async () => {
+    const wasm = await import('tiff-dec');
+    const image = await fetch('./m51.tif')
+        .then((tif) => {
+            if (tif.status < 299)
+                return tif.arrayBuffer()
+            else
+                throw new Error("could not recieve tif");
+        })
+        .then((buff) => new Uint8Array(buff));
+    return { wasm, image };
+}
+
+...
+
+// mount the component and decode images
+// images can be decoded anytime after the
+// wasm is loaded
+useEffect(() => {
+    const fetchFiles = async () => {
+        try {
+            // wasm module asynchronously loaded and image retrieval
+            const { wasm: wasmModule, image: galaxy } = await fetchAsync();
+
+            // decoding image using `tiff-dec` package
+            const initialDecodedImage = wasmModule.decode_image(galaxy);
+            const loadedMetadata = initialDecodedImage.metadata;
+            const initialDecodedImageData = wasmModule.to_decoded_u16(initialDecodedImage);
+
+            // image processing parameter calculation
+            let imageHistoMinMax: ContrastParams = preDepth(loadedMetadata.bit_depth, wasmModule);
+            let maxContrast = imageHistoMinMax.max;
+
+            // set state
+            setLoaded(true);
+            setWasm(wasmModule);
+
+            ... 
+            
+        } catch (e) {
+            // more state
+            setError({ error: e });
+            setLoaded(false);
+        }
+    }
+    fetchFiles();
+}, []);
+
+...
+
+
+```
+
+
+![App in Browser](https://github.com/Schweeble/tiff-dec/blob/main/examples/ts/example.PNG)
 
 
 
