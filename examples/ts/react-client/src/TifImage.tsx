@@ -1,11 +1,8 @@
-import React, { Component } from "react";
-import Slider from "rc-slider";
-import TifCanvas from "./TifCanvas"
-import 'rc-slider/assets/index.css';
-import { Metadata } from "tiff-dec";
-
-
-const { Range } = Slider;
+import { useState, useEffect } from "react";
+import Slider from '@mui/material/Slider';
+import { Tooltip } from "@mui/material";
+import TifCanvas from "./TifCanvas";
+import { Metadata, Image } from "tiff-dec";
 
 
 const MAX_U16 = 65535;
@@ -30,22 +27,13 @@ const fetchAsync = async () => {
     return { wasm, image };
 }
 
-interface IState {
-    loaded: boolean;
-    decodedImage?: Uint16Array;
-    displayImage?: Uint16Array;
-    decodedMetadata?: Metadata;
-    wasm?: ModuleType;
-    image?: Uint8Array;
-    error?: any;
-    imageContrast?: ContrastParams;
-    contrastSliderValue: number[];
-    maxContrast: number;
-}
-
 interface ContrastParams {
     min: number;
     max: number;
+}
+
+interface Error {
+    error: any
 }
 
 const scale = (num: number, oldRange: ContrastParams, newRange: ContrastParams): number => {
@@ -59,139 +47,141 @@ const scale = (num: number, oldRange: ContrastParams, newRange: ContrastParams):
 
 const stretch = scale;
 
-class TifImage extends Component<IProps, IState> {
-    constructor(props: IProps) {
-        super(props);
+interface Props {
+    children: React.ReactElement;
+    value: number;
+}
 
-        this.state = {
-            loaded: false,
-            decodedImage: undefined,
-            displayImage: undefined,
-            wasm: undefined,
-            image: undefined,
-            error: undefined,
-            imageContrast: undefined,
-            contrastSliderValue: [0, 100],
-            maxContrast: 100
-        }
-    }
+function ValueLabelComponent(props: Props) {
+    const { children, value } = props;
 
-    handleContrastChange(value: number[]) {
-        this.setState({ contrastSliderValue: value });
-    }
+    return (
+        <Tooltip enterTouchDelay={0} placement="top" title={value}>
+            {children}
+        </Tooltip>
+    );
+}
 
-    componentDidMount() {
-        const fetchFiles = async () => {
-            try {
-                const { wasm, image } = await fetchAsync();
-                const decodedImage = wasm.decode_image(image);
-                const metadata = decodedImage.metadata;
-                const decodedImageData = wasm.to_decoded_u16(decodedImage);
+function TifImage() {
+    // State variables
+    const [loaded, setLoaded] = useState(false);
+    const [decodedImage, setDecodedImage] = useState<Uint16Array>();
+    const [displayImage, setDisplayImage] = useState<Uint16Array>();
+    const [wasm, setWasm] = useState<ModuleType>();
+    const [image, setImage] = useState<Uint8Array>();
+    const [metadata, setMetadata] = useState<Metadata>();
+    const [error, setError] = useState<Error>();
+    const [imageContrast, setImageContrast] = useState<ContrastParams>();
+    const [contrastSliderValue, setContrastSliderValue] = useState([0, 100]);
+    const [maxContrast, setMaxContrast] = useState(100);
 
-                let imageHistoMinMax: ContrastParams = this.preDepth(metadata.bit_depth, wasm);
-                let maxContrast = imageHistoMinMax.max;
-                this.setState((previousState, _props) => {
-                    return {
-                        ...previousState,
-                        loaded: true,
-                        wasm: wasm,
-                        image: image,
-                        error: undefined,
-                        decodedImage: decodedImageData,
-                        displayImage: decodedImageData,
-                        imageContrast: imageHistoMinMax,
-                        decodedMetadata: metadata,
-                        maxContrast: maxContrast
-                    };
-                });
-            } catch (e) {
-                this.setState((previousState, _props) => {
-                    return { ...previousState, loaded: false, error: e };
-                });
-            }
-        };
-        fetchFiles();
-    }
-
-    preDepth(depth: any, wasm: ModuleType): ContrastParams {
+    // determines bit depth of image and returns contrast stretching parameters
+    function preDepth(depth: any, wasm: ModuleType): ContrastParams {
         switch (depth) {
             case wasm.Bitdepth.U8:
                 return { min: 0, max: MAX_U8 };
             case wasm.Bitdepth.U16:
                 return { min: 0, max: MAX_U16 };
             case wasm.Bitdepth.F32:
-                this.setState({ error: "F32 tiff not supported for example" });
+                setError({ error: "F32 tiff not supported for example" });
                 return { min: 0, max: Number.MAX_VALUE };
             default:
                 return { min: 0, max: 0 }
         }
+    };
 
-    }
+    // mount the component
+    useEffect(() => {
+        const fetchFiles = async () => {
+            try {
+                const { wasm: wasmModule, image: galaxy } = await fetchAsync();
+                const initialDecodedImage = wasmModule.decode_image(galaxy);
+                const loadedMetadata = initialDecodedImage.metadata;
+                const initialDecodedImageData = wasmModule.to_decoded_u16(initialDecodedImage);
 
-    componentDidUpdate(prevProps: IProps, prevState: IState) {
-        if (prevState.decodedImage && prevState.decodedMetadata &&
-            prevState.wasm && prevState.imageContrast &&
-            this.state.contrastSliderValue !== prevState.contrastSliderValue) {
-            let image = prevState.decodedImage;
-            let imageContrast = prevState.imageContrast;
-            image = image.map(pixel => {
-                return stretch(pixel, { min: this.state.contrastSliderValue[0], max: this.state.contrastSliderValue[1] }, imageContrast);
-            });
-            this.setState({ displayImage: image });
+                let imageHistoMinMax: ContrastParams = preDepth(loadedMetadata.bit_depth, wasmModule);
+                let maxContrast = imageHistoMinMax.max;
+                setLoaded(true);
+                setWasm(wasmModule);
+                setMetadata(loadedMetadata);
+                setImage(galaxy);
+                setDecodedImage(initialDecodedImageData);
+                setDisplayImage(initialDecodedImageData);
+                setImageContrast(imageHistoMinMax);
+                setMetadata(loadedMetadata);
+                setMaxContrast(maxContrast);
+            } catch (e) {
+                setError({ error: e });
+                setLoaded(false);
+            }
         }
-    }
+        fetchFiles();
+    }, []);
 
-    render() {
-        if (this.state.decodedImage &&
-            this.state.decodedMetadata &&
-            this.state.displayImage) {
-            return (
+    function handleContrastChange(e: Event, value: number | number[], activeThumb: number) {
+        if (Array.isArray(value)) setContrastSliderValue(value);
+    };
+
+    // contrast stretching
+    useEffect(() => {
+        if (loaded) {
+            let image = decodedImage;
+            let range = imageContrast ? imageContrast : { min: 0, max: 100 };
+            image = image?.map(pixel => {
+                return stretch(pixel, { min: contrastSliderValue[0], max: contrastSliderValue[1] }, range);
+            });
+            setDisplayImage(image);
+        }
+    }, [contrastSliderValue])
+
+    return (
+        <div>
+            {(loaded && displayImage && decodedImage) ?
                 <div>
                     <div className="image-container">
                         <div className="tif-image">
                             <p>16-bit TIFF Decoded Image No Processing</p>
                             <TifCanvas
-                                width={this.state.decodedMetadata.width}
-                                height={this.state.decodedMetadata.height}
-                                image={this.state.decodedImage} />
+                                width={metadata?.width}
+                                height={metadata?.height}
+                                image={decodedImage} />
                         </div>
                         <div className="tif-image">
                             <p>16-bit TIFF Image With Image Processing</p>
                             <TifCanvas
-                                width={this.state.decodedMetadata.width}
-                                height={this.state.decodedMetadata.height}
-                                image={this.state.displayImage} />
+                                width={metadata?.width}
+                                height={metadata?.height}
+                                image={displayImage} />
                         </div>
                     </div>
                     <div className="Sliders">
                         <div>
                             <p>Contrast Stretch</p>
-                            <Range
-                                allowCross={false}
-                                onChange={this.handleContrastChange.bind(this)}
-                                className="contrast-slider"
-                                defaultValue={[0, this.state.maxContrast]}
+                            <Slider
+                                valueLabelDisplay="auto"
+                                components={{
+                                    ValueLabel: ValueLabelComponent,
+                                }}
+                                aria-label="custom thumb label"
+                                defaultValue={[0, maxContrast]}
+                                onChange={handleContrastChange}
                                 min={0}
-                                max={this.state.maxContrast} />
+                                max={maxContrast}
+                                style={{
+                                    width: "40%"
+                                }}
+                            />
                         </div>
                     </div>
-                </div>
-            );
-        }
-        else {
-            let e = "";
-            if (this.state.error) {
-                e += " " + this.state.error;
-            }
-            return (
+                </div> :
                 <div className="TifImage">
-                    <p>Not Loaded Yet{e}</p>
+                    <p>Not Loaded Yet {error?.error}</p>
 
                 </div >
-            )
-        }
+            }
+        </div>
+    );
 
-    }
 }
 
 export default TifImage;

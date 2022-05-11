@@ -27,38 +27,49 @@ npm run start
 ### async import of wasm module
 
 ```typescript
-componentDidMount() {
-  const fetchFiles = async () => {
-    try {
-      const { wasm, image } = await fetchAsync();
-      const decodedImage = wasm.decode_image(image);
-      const metadata = decodedImage.metadata;
-      const decodedImageData = wasm.to_decoded_u16(decodedImage);
-
-      let imageHistoMinMax: ContrastParams = this.preDepth(metadata.bit_depth, wasm);
-      let maxContrast = imageHistoMinMax.max;
-      this.setState((previousState, _props) => {
-        return {
-          ...previousState,
-          loaded: true,
-          wasm: wasm,
-          image: image,
-          error: undefined,
-          decodedImage: decodedImageData,
-          displayImage: decodedImageData,
-          imageContrast: imageHistoMinMax,
-          decodedMetadata: metadata,
-          maxContrast: maxContrast
-        };
-      });
-    } catch (e) {
-      this.setState((previousState, _props) => {
-        return { ...previousState, loaded: false, error: e };
-      });
-    }
-  };
-  fetchFiles();
+// Fetches asynchronous files and dependencies
+const fetchAsync = async () => {
+    const wasm = await import('tiff-dec');
+    const image = await fetch('./m51.tif')
+        .then((tif) => {
+            if (tif.status < 299)
+                return tif.arrayBuffer()
+            else
+                throw new Error("could not recieve tif");
+        })
+        .then((buff) => new Uint8Array(buff));
+    return { wasm, image };
 }
+
+...
+
+// mount the component and decode images
+// images can be decoded anytime after the
+// wasm is loaded
+useEffect(() => {
+    const fetchFiles = async () => {
+        try {
+            const { wasm: wasmModule, image: galaxy } = await fetchAsync();
+            const initialDecodedImage = wasmModule.decode_image(galaxy);
+            const loadedMetadata = initialDecodedImage.metadata;
+            const initialDecodedImageData = wasmModule.to_decoded_u16(initialDecodedImage);
+
+            let imageHistoMinMax: ContrastParams = preDepth(loadedMetadata.bit_depth, wasmModule);
+            let maxContrast = imageHistoMinMax.max;
+            setLoaded(true);
+            setWasm(wasmModule);
+
+            ... 
+            
+        } catch (e) {
+            setError({ error: e });
+            setLoaded(false);
+        }
+    }
+    fetchFiles();
+}, []);
+
+
 
 ```
 
