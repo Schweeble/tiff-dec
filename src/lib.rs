@@ -15,6 +15,12 @@ use wasm_bindgen::prelude::*;
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
+/// Decodes a tiff file into an Image
+/// ### Arguments
+/// * `tif_file` - The tiff file to decode
+///
+/// ### Returns
+/// * The decoded Image
 #[wasm_bindgen]
 pub fn decode_image(tif_file: Vec<u8>) -> Result<Image, JsValue> {
     Ok(private_decode(tif_file)?)
@@ -64,6 +70,12 @@ fn map_decoder_result(result: DecodingResult, metadata: &mut Metadata) -> Result
     Ok(data)
 }
 
+/// Converts a decoded image to a u8 array
+/// ### Arguments
+/// * `decoded_image` - The decoded image to convert
+///
+/// ### Returns
+/// * The u8 array
 #[wasm_bindgen]
 pub fn to_decoded_u8(decoded_image: &Image) -> Result<Vec<u8>, JsValue> {
     match decoded_image.get_data() {
@@ -71,7 +83,12 @@ pub fn to_decoded_u8(decoded_image: &Image) -> Result<Vec<u8>, JsValue> {
         _ => Err(JsValue::from("Decoded image was not in u8 format")),
     }
 }
-
+/// Converts a decoded image to a u16 array
+/// ### Arguments
+/// * `decoded_image` - The decoded image to convert
+///
+/// ### Returns
+/// * The u16 array
 #[wasm_bindgen]
 pub fn to_decoded_u16(decoded_image: &Image) -> Result<Vec<u16>, JsValue> {
     match decoded_image.get_data() {
@@ -80,6 +97,12 @@ pub fn to_decoded_u16(decoded_image: &Image) -> Result<Vec<u16>, JsValue> {
     }
 }
 
+/// Converts a decoded image to a f32 array
+/// ### Arguments
+/// * `decoded_image` - The decoded image to convert
+///
+/// ### Returns
+/// * The f32 array
 #[wasm_bindgen]
 pub fn to_decoded_f32(decoded_image: &Image) -> Result<Vec<f32>, JsValue> {
     match decoded_image.get_data() {

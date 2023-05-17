@@ -1,6 +1,7 @@
 use thiserror::Error;
 use wasm_bindgen::JsValue;
 
+/// JS Error Enum
 #[derive(Error, Debug)]
 pub enum Error {
     #[error("data store disconnected")]
