@@ -6,7 +6,7 @@ license-file = "LICENCE_MIT"
 name = "tiff-dec"
 publish = false
 repository = "https://github.com/Schweeble/tiff-dec"
-version = "0.3.3"
+version = "0.3.4"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
