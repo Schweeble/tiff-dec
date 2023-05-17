@@ -142,7 +142,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tiff_dec_bg.js.html">tiff_dec_bg.js</a>, <a href="tiff_dec_bg.js.html#line169">line 169</a>
+        <a href="tiff_dec_bg.js.html">tiff_dec_bg.js</a>, <a href="tiff_dec_bg.js.html#line193">line 193</a>
     </li></ul></dd>
     
 
@@ -176,6 +176,15 @@
     
 
 
+
+<div class="description">
+    Decodes a tiff file into an Image
+### Arguments
+* `tif_file` - The tiff file to decode
+
+### Returns
+* The decoded Image
+</div>
 
 
 
@@ -267,7 +276,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tiff_dec_bg.js.html">tiff_dec_bg.js</a>, <a href="tiff_dec_bg.js.html#line62">line 62</a>
+        <a href="tiff_dec_bg.js.html">tiff_dec_bg.js</a>, <a href="tiff_dec_bg.js.html#line68">line 68</a>
     </li></ul></dd>
     
 
@@ -328,6 +337,15 @@
 
 
 
+<div class="description">
+    Converts a decoded image to a f32 array
+### Arguments
+* `decoded_image` - The decoded image to convert
+
+### Returns
+* The f32 array
+</div>
+
 
 
 
@@ -418,7 +436,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tiff_dec_bg.js.html">tiff_dec_bg.js</a>, <a href="tiff_dec_bg.js.html#line151">line 151</a>
+        <a href="tiff_dec_bg.js.html">tiff_dec_bg.js</a>, <a href="tiff_dec_bg.js.html#line175">line 175</a>
     </li></ul></dd>
     
 
@@ -472,157 +490,6 @@
     
 
     
-    <h4 class="name" id="to_decoded_u8"><span class="type-signature"></span>to_decoded_u8<span class="signature">(decoded_image)</span><span class="type-signature"> &rarr; {Uint8Array}</span></h4>
-    
-
-    
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>decoded_image</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="Image.html">Image</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tiff_dec_bg.js.html">tiff_dec_bg.js</a>, <a href="tiff_dec_bg.js.html#line91">line 91</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Uint8Array</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
     <h4 class="name" id="to_decoded_u16"><span class="type-signature"></span>to_decoded_u16<span class="signature">(decoded_image)</span><span class="type-signature"> &rarr; {Uint16Array}</span></h4>
     
 
@@ -630,6 +497,15 @@
 
 
 
+<div class="description">
+    Converts a decoded image to a u16 array
+### Arguments
+* `decoded_image` - The decoded image to convert
+
+### Returns
+* The u16 array
+</div>
+
 
 
 
@@ -720,7 +596,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="tiff_dec_bg.js.html">tiff_dec_bg.js</a>, <a href="tiff_dec_bg.js.html#line121">line 121</a>
+        <a href="tiff_dec_bg.js.html">tiff_dec_bg.js</a>, <a href="tiff_dec_bg.js.html#line139">line 139</a>
     </li></ul></dd>
     
 
@@ -769,6 +645,166 @@
 
 
         
+            
+
+    
+
+    
+    <h4 class="name" id="to_decoded_u8"><span class="type-signature"></span>to_decoded_u8<span class="signature">(decoded_image)</span><span class="type-signature"> &rarr; {Uint8Array}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Converts a decoded image to a u8 array
+### Arguments
+* `decoded_image` - The decoded image to convert
+
+### Returns
+* The u8 array
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>decoded_image</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Image.html">Image</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="tiff_dec_bg.js.html">tiff_dec_bg.js</a>, <a href="tiff_dec_bg.js.html#line103">line 103</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Uint8Array</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
     
 
     
@@ -784,13 +820,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Image.html">Image</a></li><li><a href="Metadata.html">Metadata</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Bitdepth">Bitdepth</a></li><li><a href="global.html#decode_image">decode_image</a></li><li><a href="global.html#to_decoded_f32">to_decoded_f32</a></li><li><a href="global.html#to_decoded_u8">to_decoded_u8</a></li><li><a href="global.html#to_decoded_u16">to_decoded_u16</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Image.html">Image</a></li><li><a href="Metadata.html">Metadata</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Bitdepth">Bitdepth</a></li><li><a href="global.html#decode_image">decode_image</a></li><li><a href="global.html#to_decoded_f32">to_decoded_f32</a></li><li><a href="global.html#to_decoded_u16">to_decoded_u16</a></li><li><a href="global.html#to_decoded_u8">to_decoded_u8</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Apr 28 2021 10:31:44 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue May 16 2023 21:17:39 GMT-0700 (Pacific Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>
